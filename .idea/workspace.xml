@@ -4,15 +4,16 @@
     <list default="true" id="03d0399e-403c-4bfd-88c7-21c716e2d3c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/game.js" afterPath="$PROJECT_DIR$/js/game.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nonstop-assignment.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/index.html" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378575745085" ignored="false" />
-    <file path="/game.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378633608057" ignored="false" />
+    <file path="/index.html" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378654083948" ignored="false" />
+    <file path="/game.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378661412404" ignored="false" />
     <file path="/style.css" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378575807096" ignored="false" />
     <file path="/Dummy.txt" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378636226851" ignored="false" />
+    <file path="/ball.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378661478623" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,10 +33,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="47" selection-start="749" selection-end="749" vertical-scroll-proportion="0.425">
+            <state line="16" column="45" selection-start="719" selection-end="719" vertical-scroll-proportion="-10.0">
               <folding />
             </state>
           </provider>
@@ -53,7 +54,16 @@
       <file leaf-file-name="game.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="36" selection-start="743" selection-end="743" vertical-scroll-proportion="0.0">
+            <state line="100" column="46" selection-start="2531" selection-end="2531" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ball.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/ball.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="118" column="65" selection-start="3420" selection-end="3420" vertical-scroll-proportion="0.65960914">
               <folding />
             </state>
           </provider>
@@ -89,7 +99,7 @@
       <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="16" selection-start="421" selection-end="421" vertical-scroll-proportion="0.0">
+            <state line="26" column="14" selection-start="586" selection-end="586" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -115,16 +125,17 @@
       <list>
         <option value="$PROJECT_DIR$/css/reset.css" />
         <option value="$PROJECT_DIR$/js/jquery.path.js" />
-        <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/js/utils.js" />
-        <option value="$PROJECT_DIR$/js/game.js" />
+        <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/game.js" />
+        <option value="$PROJECT_DIR$/js/ball.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="68" />
-    <option name="y" value="51" />
+    <option name="x" value="67" />
+    <option name="y" value="52" />
     <option name="width" value="1250" />
     <option name="height" value="970" />
   </component>
@@ -339,7 +350,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="68" y="51" width="1250" height="970" extended-state="0" />
+    <frame x="67" y="52" width="1250" height="970" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -486,9 +497,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/style.css">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="16" selection-start="421" selection-end="421" vertical-scroll-proportion="0.0">
+        <state line="119" column="25" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -500,23 +511,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
+    <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="25" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="36" selection-start="743" selection-end="743" vertical-scroll-proportion="0.0">
+        <state line="26" column="14" selection-start="586" selection-end="586" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="47" selection-start="749" selection-end="749" vertical-scroll-proportion="0.425">
+        <state line="16" column="45" selection-start="719" selection-end="719" vertical-scroll-proportion="-10.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="100" column="46" selection-start="2531" selection-end="2531" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/ball.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="65" selection-start="3420" selection-end="3420" vertical-scroll-proportion="0.65960914">
           <folding />
         </state>
       </provider>

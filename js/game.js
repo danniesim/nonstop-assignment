@@ -88,12 +88,15 @@ function smoothstep(a, b, t)
 function Game(iIface) {
     this.iface = iIface;
     this.canvas = $('#main')[0];
+    this.ctxToon = $('#toon')[0].getContext('2d');
     this.ctx = this.canvas.getContext('2d');
     this.isRunning = true;
 
     this.HALF_PI = Math.PI/2;
     this.TRAVEL_SPEED = 0.01;
     this.interpPoint = {x: 100, y: 100, dist:0, rad: -Math.PI/2};
+    this.currentDist = 0;
+    this.ball = new Ball(this.ctxToon, 100, 100);
 
     this.animateToonEnd();
 
@@ -135,8 +138,9 @@ Game.prototype.getDragPushObj = function(x, y) {
     var dist = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
 
     var rVal = null;
-    if (dist > 0) {
 
+    // Set number to more than 0 for filtering... untested...
+    if (dist > 0) {
         this.dragRad = Math.atan2(diffY, diffX);
 
         this.dragpos = {x: x, y: y};
@@ -144,16 +148,12 @@ Game.prototype.getDragPushObj = function(x, y) {
 
         rVal = {x: lastX, y: lastY, dist:dist, rad: this.dragRad};
 
-
     } else if (dist == 0) {
         // final drag point
         this.dragpos = {x: x, y: y};
 
         rVal = {x: lastX, y: lastY, dist:dist, rad: this.dragRad};
     }
-
-
-
 
     return rVal;
 }
@@ -175,9 +175,7 @@ Game.prototype.drag = function(x, y) {
 }
 
 Game.prototype.dragStop = function(x, y) {
-//    this.ctx.lineTo(x, y);
-//    this.ctx.stroke();
-//
+
     if (this.iface == 'mobile') {
         x = this.dragpos.x;
         y = this.dragpos.y;
@@ -193,6 +191,9 @@ Game.prototype.dragStop = function(x, y) {
     console.log(this.dragDist);
 
     this.dragpos = null;
+    var thisPoint = this.arrDragPos[0];
+    this.totalPointDist = thisPoint.dist;
+
     this.animateToon = true;
 
 }
@@ -213,9 +214,9 @@ Game.prototype.start = function() {
     })();
 }
 
-Game.prototype.interpolatePoint = function(iPoint, iDistance, iPrevPoint) {
-    var tX = Math.cos(iPoint.rad) * -iDistance;
-    var tY = Math.sin(iPoint.rad) * -iDistance;
+Game.prototype.interpolatePoint = function(iPoint, iDistance, iNextPoint) {
+    var tX = Math.cos(iPoint.rad) * (iPoint.dist - iDistance);
+    var tY = Math.sin(iPoint.rad) * (iPoint.dist - iDistance);
 
     var tRad = iPoint.rad;
 //    Failed attempt at interplolating angles... another time perhaps...
@@ -226,11 +227,12 @@ Game.prototype.interpolatePoint = function(iPoint, iDistance, iPrevPoint) {
 //        tRad =  ((iPoint.rad * (1 - tRatio)) + (iPrevPoint.rad * (tRatio))) / 2
 //    }
 
-    return {x: tX + iPoint.x, y: tY + iPoint.y, rad: tRad};
+    return {x: iPoint.x + tX, y: iPoint.y + tY , rad: tRad};
 }
 
 Game.prototype.animateToonEnd = function() {
     this.animateToon = false;
+    this.ball.dist = this.currentDist;
     this.currentDist = 0;
     this.currentPoint = 0;
     this.totalPointDist = 0;
@@ -246,32 +248,32 @@ Game.prototype.update = function() {
 
     if (this.animateToon) {
 
-
+        // Get the current path progression
         this.currentStep += this.TRAVEL_SPEED * (this.dragDist/1.5);
 
+        // Apply easing
         var step = smoothstep(0, this.dragDist, this.currentStep);
-
-
         this.currentDist = step * this.dragDist;
 
+        // Get the current point
         var thisPoint = this.arrDragPos[this.currentPoint];
 
-        if (this.currentDist > this.totalPointDist) {
-            this.totalPointDist += thisPoint.dist;
+        // Find next point in path based on distance travelled.
+        var bEndArray = false;
+        while ((this.currentDist > this.totalPointDist) && !bEndArray) {
             this.currentPoint++;
-
             if (this.currentPoint < this.arrDragPos.length) {
                 thisPoint = this.arrDragPos[this.currentPoint];
+                this.totalPointDist += thisPoint.dist;
+            } else {
+                bEndArray = true;
             }
-
         }
 
-//        console.log("step: " + step);
-        if (this.currentPoint < this.arrDragPos.length) {
-
+        // Interpolate to get current point
+        if (this.currentPoint < this.arrDragPos.length && step < 1) {
             var distForThisPoint = this.totalPointDist - this.currentDist;
-
-            var nextPoint = this.arrDragPos[this.currentPoint - 1];
+            var nextPoint = this.arrDragPos[this.currentPoint + 1];
 
             this.interpPoint = this.interpolatePoint(thisPoint, distForThisPoint, nextPoint);
 
@@ -299,11 +301,12 @@ Game.prototype.draw = function() {
     var $toon = this.getToon();
 
     $toon.css({
-        left: this.interpPoint.x - 20 + 'px', // re-center the ship
-        top: this.interpPoint.y - 40 + 'px', // re-center the ship
+        left: this.interpPoint.x - 50 + 'px', // re-center the ship
+        top: this.interpPoint.y - 50 + 'px', // re-center the ship
         '-webkit-transform': 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)',
         transform: 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)'
     });
 
+    this.ball.render((this.ball.dist + this.currentDist)/45);
 
 }

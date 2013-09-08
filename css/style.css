@@ -21,10 +21,10 @@ body
 #toon {
     position: absolute;
     z-index:1;
-    background:url('../images/rocket.png');
-    background-size:40px 80px;
-    width:40px;
-    height:80px;
+    /*background:url('../images/rocket.png');*/
+    /*background-size:40px 80px;*/
+    width:100px;
+    height:100px;
     pointer-events:none
 }
 
