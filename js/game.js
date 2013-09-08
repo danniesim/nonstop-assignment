@@ -16,8 +16,18 @@ function isMobile() {
     return rVal;
 }
 
+function updateContainer() {
+    var width = $("#main").width();
+    var height = $("#main").height();
+
+    // Set canvas width and height attributes correctly to
+    // match actual CSS pixel size
+    $('#main').attr('width', width);
+    $('#main').attr('height', height);
+}
+
 function TheGame() {
-    // ##TODO## resolve this properly
+    // ##TODONE## resolve this properly
     var iface = 'desktop';
 
     if (isMobile()) {
@@ -28,15 +38,11 @@ function TheGame() {
         });
     }
 
-    var width = $("#main").width();
-    var height = $("#main").height();
-
-    // Set canvas width and height attributes correctly to
-    // match actual CSS pixel size
-    $('#main').attr('width', width);
-    $('#main').attr('height', height);
-
-    // ##TODO## needs resize handler
+    updateContainer();
+    // ##TODONE## needs resize handler
+    $(window).resize(function() {
+        updateContainer();
+    });
 
     var game = new Game(iface);
 
