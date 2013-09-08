@@ -1,9 +1,32 @@
 
+function isMobile() {
+    var rVal = false;
+
+    if( navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+        ) {
+        rVal = true;
+    }
+
+    return rVal;
+}
 
 function TheGame() {
-
     // ##TODO## resolve this properly
     var iface = 'desktop';
+
+    if (isMobile()) {
+        iface = 'mobile';
+
+        $('body').bind('touchmove', function (ev) {
+            ev.preventDefault();
+        });
+    }
 
     var width = $("#main").width();
     var height = $("#main").height();
@@ -15,7 +38,7 @@ function TheGame() {
 
     // ##TODO## needs resize handler
 
-    var game = new Game();
+    var game = new Game(iface);
 
     $('#main').canvasDragDrop({
         mouse: iface == 'desktop',
@@ -56,7 +79,8 @@ function smoothstep(a, b, t)
     return (p * p * (3 - 2 * p));
 }
 
-function Game() {
+function Game(iIface) {
+    this.iface = iIface;
     this.canvas = $('#main')[0];
     this.ctx = this.canvas.getContext('2d');
     this.isRunning = true;
@@ -145,8 +169,13 @@ Game.prototype.drag = function(x, y) {
 }
 
 Game.prototype.dragStop = function(x, y) {
-    this.ctx.lineTo(x, y);
-    this.ctx.stroke();
+//    this.ctx.lineTo(x, y);
+//    this.ctx.stroke();
+//
+    if (this.iface == 'mobile') {
+        x = this.dragpos.x;
+        y = this.dragpos.y;
+    }
 
     var dragObj = this.getDragPushObj(x, y);
     if (dragObj) {
