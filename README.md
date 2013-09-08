@@ -1,7 +1,7 @@
 nonstop-assignment
 ==================
 
-HTML Assignment
+Implement HTML5 prototype that shows basic animation and implements convincing illusion of movement.
 
 Requirements
 ------------
