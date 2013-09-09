@@ -17,13 +17,15 @@ function isMobile() {
 }
 
 function updateContainer() {
-    var width = $("#main").width();
-    var height = $("#main").height();
+    var main = $("#main");
+
+    var width = main.width();
+    var height = main.height();
 
     // Set canvas width and height attributes correctly to
     // match actual CSS pixel size
-    $('#main').attr('width', width);
-    $('#main').attr('height', height);
+    main.attr('width', width);
+    main.attr('height', height);
 }
 
 function TheGame() {
@@ -49,9 +51,9 @@ function TheGame() {
     $('#main').canvasDragDrop({
         mouse: iface == 'desktop',
         onClick:function(x,y) { game.clickAt(x,y); },
-        onStart:function(x,y) { game.dragStart(x,y);},
-        onDrag:function(x,y) { game.drag(x,y)},
-        onStop:function(x,y) { game.dragStop(x,y);  },
+        onStart:function(x,y) { game.dragStart(x,y); },
+        onDrag:function(x,y) { game.drag(x,y) },
+        onStop:function(x,y) { game.dragStop(x,y); },
         momentum : false,
         tolerance : iface == 'desktop' ? 5 : 1
     });
@@ -94,19 +96,47 @@ function Game(iIface) {
 
     this.HALF_PI = Math.PI/2;
     this.TRAVEL_SPEED = 0.01;
-    this.interpPoint = {x: 100, y: 100, dist:0, rad: -Math.PI/2};
+    this.interpPoint = {x: 100, y: 100, dist: 0, rad: -Math.PI/2};
     this.currentDist = 0;
-    this.ball = new Ball(this.ctxToon, 100, 100);
+    this.ball = new Ball(this.ctxToon, 100, 100, 20);
+    this.currentPoint = 0;
 
     this.animateToonEnd();
-
 }
 
-Game.prototype.clickAt = function(x, y) {
+Game.prototype.clickAt = function (x, y) {
+    this.animateToonEnd();
+
     this.click = {x: x, y: y};
-}
+    this.dragpos = {x: x, y: y};
+    this.arrDragPos = [];
+    this.dragDist = 0;
+    this.dragRad = 0;
 
-Game.prototype.dragStart = function(x, y) {
+    var dragObj = null;
+
+    this.dragpos.x = this.interpPoint.x;
+    this.dragpos.y = this.interpPoint.y;
+
+    dragObj = this.getDragPushObj(x, y);
+    if (dragObj) {
+        this.arrDragPos.push(dragObj);
+    }
+
+//    dragObj = this.getDragPushObj(this.interpPoint.x, this.interpPoint.y);
+//    if (dragObj) {
+//        this.arrDragPos.push(dragObj);
+//    }
+
+    console.log(this.arrDragPos);
+
+    var thisPoint = this.arrDragPos[0];
+    this.totalPointDist = thisPoint.dist;
+
+    this.animateToon = true;
+};
+
+Game.prototype.dragStart = function (x, y) {
     this.ctx.strokeStyle = '#ff0000';
     this.ctx.lineWidth = 4;
     this.ctx.beginPath();
@@ -120,13 +150,13 @@ Game.prototype.dragStart = function(x, y) {
     console.log({x: x, y: y});
 
     this.animateToonEnd();
-}
+};
 
 Game.prototype.getToon = function() {
-    var $div = $('#container')
+    var $div = $('#container');
 
     return $div.find('#toon');
-}
+};
 
 Game.prototype.getDragPushObj = function(x, y) {
     var lastX = this.dragpos.x;
@@ -146,17 +176,17 @@ Game.prototype.getDragPushObj = function(x, y) {
         this.dragpos = {x: x, y: y};
         this.dragDist += dist;
 
-        rVal = {x: lastX, y: lastY, dist:dist, rad: this.dragRad};
+        rVal = {x:lastX, y:lastY, dist:dist, rad:this.dragRad};
 
     } else if (dist == 0) {
         // final drag point
         this.dragpos = {x: x, y: y};
 
-        rVal = {x: lastX, y: lastY, dist:dist, rad: this.dragRad};
+        rVal = {x:lastX, y:lastY, dist:dist, rad:this.dragRad};
     }
 
     return rVal;
-}
+};
 
 Game.prototype.drag = function(x, y) {
     this.ctx.lineTo(x, y);
@@ -172,18 +202,18 @@ Game.prototype.drag = function(x, y) {
     console.log({x: x, y: y});
 
 
-}
+};
 
 Game.prototype.dragStop = function(x, y) {
 
+    // Quick hack for mobile touch stop - doesn't give proper x, y
     if (this.iface == 'mobile') {
         x = this.dragpos.x;
         y = this.dragpos.y;
     }
 
     var dragObj = this.getDragPushObj(x, y);
-    if (dragObj) {
-        console.log("got it in!")
+    if (dragObj != null) {
         this.arrDragPos.push(dragObj);
     }
     console.log({x: x, y: y});
@@ -196,7 +226,7 @@ Game.prototype.dragStop = function(x, y) {
 
     this.animateToon = true;
 
-}
+};
 
 Game.prototype.start = function() {
     // main loop
@@ -212,13 +242,14 @@ Game.prototype.start = function() {
         }
         requestAnimFrame(gameLoop, self.canvas);
     })();
-}
+};
 
 Game.prototype.interpolatePoint = function(iPoint, iDistance, iNextPoint) {
     var tX = Math.cos(iPoint.rad) * (iPoint.dist - iDistance);
     var tY = Math.sin(iPoint.rad) * (iPoint.dist - iDistance);
 
-    var tRad = iPoint.rad;
+//    var tRad = iPoint.rad;
+
 //    Failed attempt at interplolating angles... another time perhaps...
 //    if (iPrevPoint != null) {
 //        var tRatio = iDistance/iPrevPoint.dist;
@@ -227,8 +258,8 @@ Game.prototype.interpolatePoint = function(iPoint, iDistance, iNextPoint) {
 //        tRad =  ((iPoint.rad * (1 - tRatio)) + (iPrevPoint.rad * (tRatio))) / 2
 //    }
 
-    return {x: iPoint.x + tX, y: iPoint.y + tY , rad: tRad};
-}
+    return {x: iPoint.x + tX, y: iPoint.y + tY, rad: iPoint.rad};
+};
 
 Game.prototype.animateToonEnd = function() {
     this.animateToon = false;
@@ -237,7 +268,7 @@ Game.prototype.animateToonEnd = function() {
     this.currentPoint = 0;
     this.totalPointDist = 0;
     this.currentStep = 0;
-}
+};
 
 Game.prototype.update = function() {
     // update object and background positions here. One possible way
@@ -278,25 +309,26 @@ Game.prototype.update = function() {
             this.interpPoint = this.interpolatePoint(thisPoint, distForThisPoint, nextPoint);
 
         } else if (this.currentPoint == this.arrDragPos.length && step < 1) {
+            // bah... shit happens... I'll find you someday li'bug
             console.log("pew!");
         } else {
             this.animateToonEnd();
         }
     }
-}
+};
 
 Game.prototype.draw = function() {
     // draw here to canvas
 
     // some examples
-    if (this.click) {
-        this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(this.click.x, this.click.y, 2, 2);
-    }
-    if (this.dragpos) {
-        this.ctx.fillStyle = 'red';
-//        this.ctx.fillRect(this.dragpos.x, this.dragpos.y, 5, 5);
-    }
+//    if (this.click) {
+//        this.ctx.fillStyle = 'black';
+//        this.ctx.fillRect(this.click.x, this.click.y, 2, 2);
+//    }
+//    if (this.dragpos) {
+//        this.ctx.fillStyle = 'red';
+////        this.ctx.fillRect(this.dragpos.x, this.dragpos.y, 5, 5);
+//    }
 
     var $toon = this.getToon();
 
@@ -309,4 +341,4 @@ Game.prototype.draw = function() {
 
     this.ball.render((this.ball.dist + this.currentDist)/45);
 
-}
+};
