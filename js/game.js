@@ -299,9 +299,18 @@ Game.prototype.update = function() {
     // way is to simply draw it on canvas on every update.
 
     if (this.animateToon) {
+        // Get speed
+        var travelSpeed = this.TRAVEL_SPEED * (this.dragDist);
+
+        if (travelSpeed < this.dragDist/50) {
+            travelSpeed = this.dragDist/50;
+        }
+        if (travelSpeed > 10) {
+            travelSpeed = 10;
+        }
 
         // Get the current path progression
-        this.currentStep += this.TRAVEL_SPEED * (this.dragDist/1.5);
+        this.currentStep += travelSpeed;
 
         // Apply easing
         var step = smoothstep(0, this.dragDist, this.currentStep);
@@ -357,8 +366,8 @@ Game.prototype.drawAnimate = function() {
     this.$toon.css({
         left: this.vpOffset.x - this.TOON_HALF_WIDTH + 'px', // re-center the ship
         top: this.vpOffset.y - this.TOON_HALF_WIDTH + 'px', // re-center the ship
-        '-webkit-transform': 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)',
-        transform: 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)'
+//        '-webkit-transform': 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)',
+//        transform: 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)'
     });
 
     this.$shadow.css({
@@ -369,7 +378,7 @@ Game.prototype.drawAnimate = function() {
     var offsetX = -(this.interpPoint.x) + this.vpOffset.x;
     var offsetY = -(this.interpPoint.y) + this.vpOffset.y;
 
-    this.ball.render(this.ball.dist / 45);
+    this.ball.render(this.ball.dist / 45, this.interpPoint.rad + this.HALF_PI);
 
     this.ctx.clearRect(0,0, this.viewPortWidth, this.viewPortHeight);
 

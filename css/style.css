@@ -45,5 +45,6 @@ body
     position: absolute;
     z-index: 2;
     display: block;
+    pointer-events:none;
     background-image: url(../images/shadow.png);
 }
