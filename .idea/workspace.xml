@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="03d0399e-403c-4bfd-88c7-21c716e2d3c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/game.js" afterPath="$PROJECT_DIR$/js/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="nonstop-assignment.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/index.html" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378741609634" ignored="false" />
-    <file path="/game.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378798611244" ignored="false" />
+    <file path="/game.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378799403960" ignored="false" />
     <file path="/style.css" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378726647864" ignored="false" />
     <file path="/Dummy.txt" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378636226851" ignored="false" />
     <file path="/ball.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378711407752" ignored="false" />
@@ -52,7 +51,7 @@
       <file leaf-file-name="game.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="415" column="12" selection-start="11932" selection-end="11932" vertical-scroll-proportion="0.17485265">
+            <state line="404" column="62" selection-start="11644" selection-end="11644" vertical-scroll-proportion="0.48861283">
               <folding />
             </state>
           </provider>
@@ -541,7 +540,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="415" column="12" selection-start="11932" selection-end="11932" vertical-scroll-proportion="0.17485265">
+        <state line="404" column="62" selection-start="11644" selection-end="11644" vertical-scroll-proportion="0.48861283">
           <folding />
         </state>
       </provider>

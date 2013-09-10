@@ -172,10 +172,6 @@ Game.prototype.dragStart = function (iX, iY) {
         x = iX + this.interpPoint.x - this.vpOffset.x;
         y = iY + this.interpPoint.y - this.vpOffset.y;
 
-        this.ctx.strokeStyle = '#ff0000';
-        this.ctx.lineWidth = 4;
-        this.ctx.beginPath();
-        this.ctx.moveTo(x, y);
         this.dragpos = {x: x, y: y};
 
         this.arrDragPos = [];
@@ -228,12 +224,6 @@ Game.prototype.drag = function(iX, iY) {
     if (this.dragOn == true) {
         x = iX + this.interpPoint.x - this.vpOffset.x;
         y = iY + this.interpPoint.y - this.vpOffset.y;
-
-        this.ctx.lineTo(x, y);
-
-        this.ctx.stroke();
-        this.ctx.beginPath();
-        this.ctx.moveTo(x, y);
 
         var dragObj = this.getDragPushObj(x, y);
         if (dragObj) {
@@ -410,11 +400,22 @@ Game.prototype.drawAnimate = function() {
             this.ctx.drawImage(this.imageObj, offsetX + curX, offsetY + curY);
         }
     }
+    this.ctx.strokeStyle = '#ff0000';
+    this.ctx.lineWidth = 4;
 
-    if (this.arrDragPos.length > 1) {
-        for (var i = 0; i < this.arrDragPos.length; i++) {
-
+    if (this.arrDragPos != null && this.arrDragPos.length > 0) {
+        this.ctx.beginPath();
+        var lX = this.arrDragPos[0].x - this.interpPoint.x + this.vpOffset.x
+        var lY = this.arrDragPos[0].y - this.interpPoint.y + this.vpOffset.y
+        this.ctx.moveTo(lX, lY);
+        for (var i = 1; i < this.arrDragPos.length; i++) {
+            lX = this.arrDragPos[i].x - this.interpPoint.x + this.vpOffset.x
+            lY = this.arrDragPos[i].y - this.interpPoint.y + this.vpOffset.y
+            this.ctx.lineTo(lX, lY);
+//            this.ctx.beginPath();
+//            this.ctx.moveTo(x, y);
         }
+        this.ctx.stroke();
     }
 };
 
