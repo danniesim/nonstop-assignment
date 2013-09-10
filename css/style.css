@@ -20,9 +20,7 @@ body
 
 #toon {
     position: absolute;
-    z-index: 2;
-    /*background:url('../images/rocket.png');*/
-    /*background-size:40px 80px;*/
+    z-index: 3;
     pointer-events:none;
 }
 
@@ -39,19 +37,13 @@ body
 {
     position: absolute;
     z-index: 1;
-    /*width: 500px;*/
-    /*height: 500px;*/
     display: block;
-    /*background:url('../images/grass-tile.jpg');*/
 }
 
-#background
+#shadow
 {
     position: absolute;
-    z-index: -1;
-    width: 500px;
-    height: 500px;
+    z-index: 2;
     display: block;
-    pointer-events:none;
-    background:url('../images/grass-tile.jpg');
+    background-image: url(../images/shadow.png);
 }

@@ -35,6 +35,7 @@ function TheGame() {
     // ##TODONE## needs resize handler
     $(window).resize(function() {
         game.updateContainer();
+        game.drawAnimate();
     });
 
 
@@ -83,6 +84,7 @@ function Game(iIface) {
 
     this.$toon = this.getElement('#toon');
     this.$main = this.getElement('#main');
+    this.$shadow = this.getElement('#shadow');
 
     this.ctxToon = this.$toon[0].getContext('2d');
     this.ctx = this.$main[0].getContext('2d');
@@ -91,7 +93,7 @@ function Game(iIface) {
     this.imageObj.src = "images/grass-tile.jpg";
 
     this.WORLD_PX = 1000;
-    this.TILE_WIDTH = 256;
+    this.TILE_WIDTH = 250;
     this.NUM_TILES = this.WORLD_PX/this.TILE_WIDTH;
 
     this.isRunning = true;
@@ -99,6 +101,7 @@ function Game(iIface) {
     this.dragOn = false;
 
     this.TOON_HALF_WIDTH = 100/2;
+    this.TOON_POS_CLIP_RADIUS = 42;
     this.HALF_PI = Math.PI/2;
     this.TRAVEL_SPEED = 0.01;
     this.interpPoint = {x: 512, y: 512, dist: 0, rad: -Math.PI/2};
@@ -282,7 +285,6 @@ Game.prototype.interpolatePoint = function(iPoint, iDistance) {
 
 Game.prototype.animateToonEnd = function() {
     this.animateToon = false;
-    this.ball.dist = this.currentDist;
     this.currentDist = 0;
     this.currentPoint = 0;
     this.totalPointDist = 0;
@@ -303,7 +305,10 @@ Game.prototype.update = function() {
 
         // Apply easing
         var step = smoothstep(0, this.dragDist, this.currentStep);
+        var lastDist = this.currentDist;
         this.currentDist = step * this.dragDist;
+        var dDist = this.currentDist - lastDist;
+        this.ball.dist += dDist;
 
         // Get the current point
         var thisPoint = this.arrDragPos[this.currentPoint];
@@ -332,34 +337,39 @@ Game.prototype.update = function() {
         }
 
         //clip position
-        if (this.interpPoint.x < 0) {
-            this.interpPoint.x = 0;
+        if (this.interpPoint.x - this.TOON_POS_CLIP_RADIUS < 0) {
+            this.interpPoint.x = this.TOON_POS_CLIP_RADIUS;
         }
-        if (this.interpPoint.x > this.WORLD_PX) {
-            this.interpPoint.x = this.WORLD_PX;
+        if (this.interpPoint.x > this.WORLD_PX - this.TOON_POS_CLIP_RADIUS) {
+            this.interpPoint.x = this.WORLD_PX- this.TOON_POS_CLIP_RADIUS;
         }
 
-        if (this.interpPoint.y < 0) {
-            this.interpPoint.y = 0;
+        if (this.interpPoint.y - this.TOON_POS_CLIP_RADIUS< 0) {
+            this.interpPoint.y = this.TOON_POS_CLIP_RADIUS;
         }
-        if (this.interpPoint.y > this.WORLD_PX) {
-            this.interpPoint.y = this.WORLD_PX;
+        if (this.interpPoint.y > this.WORLD_PX - this.TOON_POS_CLIP_RADIUS) {
+            this.interpPoint.y = this.WORLD_PX - this.TOON_POS_CLIP_RADIUS;
         }
     }
 };
 
 Game.prototype.drawAnimate = function() {
     this.$toon.css({
-        left: this.vpOffset.x - 50 + 'px', // re-center the ship
-        top: this.vpOffset.y - 50 + 'px', // re-center the ship
+        left: this.vpOffset.x - this.TOON_HALF_WIDTH + 'px', // re-center the ship
+        top: this.vpOffset.y - this.TOON_HALF_WIDTH + 'px', // re-center the ship
         '-webkit-transform': 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)',
         transform: 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)'
+    });
+
+    this.$shadow.css({
+        left: this.vpOffset.x - 65 + 'px', // re-center the ship
+        top: this.vpOffset.y + 10 + 'px', // re-center the ship
     });
 
     var offsetX = -(this.interpPoint.x) + this.vpOffset.x;
     var offsetY = -(this.interpPoint.y) + this.vpOffset.y;
 
-    this.ball.render((this.ball.dist + this.currentDist)/45);
+    this.ball.render(this.ball.dist / 45);
 
     this.ctx.clearRect(0,0, this.viewPortWidth, this.viewPortHeight);
 
