@@ -83,18 +83,19 @@ function Game(iIface) {
     this.iface = iIface;
 
     this.$toon = this.getElement('#toon');
-    this.$background = this.getElement('#background');
     this.$main = this.getElement('#main');
 
     this.ctxToon = this.$toon[0].getContext('2d');
     this.ctx = this.$main[0].getContext('2d');
-    this.ctxBg = this.$background[0].getContext('2d');
 
     this.imageObj = new Image();
     this.imageObj.src = "images/grass-tile.jpg";
 
     this.isRunning = true;
+    this.dragOn = false;
 
+    this.WORLD_PX = 1000;
+    this.TOON_HALF_WIDTH = 100/2;
     this.HALF_PI = Math.PI/2;
     this.TRAVEL_SPEED = 0.01;
     this.interpPoint = {x: 512, y: 512, dist: 0, rad: -Math.PI/2};
@@ -123,8 +124,8 @@ Game.prototype.updateContainer = function() {
 Game.prototype.clickAt = function (iX, iY) {
     this.animateToonEnd();
 
-    x = iX + this.interpPoint.x - this.vpOffset.x;
-    y = iY + this.interpPoint.y - this.vpOffset.y;
+    var x = iX + this.interpPoint.x - this.vpOffset.x;
+    var y = iY + this.interpPoint.y - this.vpOffset.y;
 
 //    this.click = {x: x, y: y};
     this.dragpos = {x: x, y: y};
@@ -157,22 +158,34 @@ Game.prototype.clickAt = function (iX, iY) {
 };
 
 Game.prototype.dragStart = function (iX, iY) {
-    x = iX + this.interpPoint.x - this.vpOffset.x;
-    y = iY + this.interpPoint.y - this.vpOffset.y;
+    var boundLeft = this.vpOffset.x - this.TOON_HALF_WIDTH;
+    var boundRight = this.vpOffset.x + this.TOON_HALF_WIDTH;
+    var boundTop = this.vpOffset.y - this.TOON_HALF_WIDTH;
+    var boundBottom = this.vpOffset.y + this.TOON_HALF_WIDTH;
 
-    this.ctx.strokeStyle = '#ff0000';
-    this.ctx.lineWidth = 4;
-    this.ctx.beginPath();
-    this.ctx.moveTo(x, y);
-    this.dragpos = {x: x, y: y};
+    var inX = (iX > boundLeft) && (iX < boundRight);
+    var inY = (iY > boundTop) && (iY < boundBottom);
+    if (inX && inY) {
+        iX = this.vpOffset.x;
+        iY = this.vpOffset.y;
+        this.dragOn = true;
+        x = iX + this.interpPoint.x - this.vpOffset.x;
+        y = iY + this.interpPoint.y - this.vpOffset.y;
 
-    this.arrDragPos = [];
-    this.dragDist = 0;
-    this.dragRad = 0;
+        this.ctx.strokeStyle = '#ff0000';
+        this.ctx.lineWidth = 4;
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, y);
+        this.dragpos = {x: x, y: y};
 
-    console.log({x: x, y: y});
+        this.arrDragPos = [];
+        this.dragDist = 0;
+        this.dragRad = 0;
 
-    this.animateToonEnd();
+        console.log({x: x, y: y});
+
+        this.animateToonEnd();
+    }
 };
 
 Game.prototype.getElement = function(id) {
@@ -212,48 +225,52 @@ Game.prototype.getDragPushObj = function(x, y) {
 };
 
 Game.prototype.drag = function(iX, iY) {
-    x = iX + this.interpPoint.x - this.vpOffset.x;
-    y = iY + this.interpPoint.y - this.vpOffset.y;
+    if (this.dragOn == true) {
+        x = iX + this.interpPoint.x - this.vpOffset.x;
+        y = iY + this.interpPoint.y - this.vpOffset.y;
 
-    this.ctx.lineTo(x, y);
+        this.ctx.lineTo(x, y);
 
-    this.ctx.stroke();
-    this.ctx.beginPath();
-    this.ctx.moveTo(x, y);
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, y);
 
-    var dragObj = this.getDragPushObj(x, y);
-    if (dragObj) {
-        this.arrDragPos.push(dragObj);
+        var dragObj = this.getDragPushObj(x, y);
+        if (dragObj) {
+            this.arrDragPos.push(dragObj);
+        }
+        console.log({x: x, y: y});
     }
-    console.log({x: x, y: y});
-
-
 };
 
 Game.prototype.dragStop = function(iX, iY) {
+    if (this.dragOn == true) {
+        // Quick hack for mobile touch stop - doesn't give proper x, y
+        var x;
+        var y;
+        if (this.iface == 'mobile') {
+            x = this.dragpos.x;
+            y = this.dragpos.y;
+        } else {
+            x = iX + this.interpPoint.x - this.vpOffset.x;
+            y = iY + this.interpPoint.y - this.vpOffset.y;
+        }
 
-    // Quick hack for mobile touch stop - doesn't give proper x, y
-    if (this.iface == 'mobile') {
-        x = this.dragpos.x;
-        y = this.dragpos.y;
-    } else {
-        x = iX + this.interpPoint.x - this.vpOffset.x;
-        y = iY + this.interpPoint.y - this.vpOffset.y;
+        var dragObj = this.getDragPushObj(x, y);
+        if (dragObj != null) {
+            this.arrDragPos.push(dragObj);
+        }
+        console.log({x: x, y: y});
+        console.log(this.arrDragPos);
+        console.log(this.dragDist);
+
+        this.dragpos = null;
+        var thisPoint = this.arrDragPos[0];
+        this.totalPointDist = thisPoint.dist;
+
+        this.animateToon = true;
+        this.dragOn = false;
     }
-
-    var dragObj = this.getDragPushObj(x, y);
-    if (dragObj != null) {
-        this.arrDragPos.push(dragObj);
-    }
-    console.log({x: x, y: y});
-    console.log(this.arrDragPos);
-    console.log(this.dragDist);
-
-    this.dragpos = null;
-    var thisPoint = this.arrDragPos[0];
-    this.totalPointDist = thisPoint.dist;
-
-    this.animateToon = true;
 
 };
 
@@ -345,6 +362,21 @@ Game.prototype.update = function() {
         } else {
             this.animateToonEnd();
         }
+
+        //clip position
+        if (this.interpPoint.x < 0) {
+            this.interpPoint.x = 0;
+        }
+        if (this.interpPoint.x > this.WORLD_PX) {
+            this.interpPoint.x = this.WORLD_PX;
+        }
+
+        if (this.interpPoint.y < 0) {
+            this.interpPoint.y = 0;
+        }
+        if (this.interpPoint.y > this.WORLD_PX) {
+            this.interpPoint.y = this.WORLD_PX;
+        }
     }
 };
 
@@ -361,11 +393,13 @@ Game.prototype.drawAnimate = function() {
 
     this.ball.render((this.ball.dist + this.currentDist)/45, this.interpPoint.rad + this.HALF_PI);
 
-    var TILE_WIDTH = 240;
-    var NUM_TILES = 4;
+    var TILE_WIDTH = 256;
+    var NUM_TILES = this.WORLD_PX/TILE_WIDTH;
 
     this.ctx.clearRect(0,0, this.viewPortWidth, this.viewPortHeight);
 
+    // Negligible savings if a more sophisticated tiling strategy is used. So KISS.
+    // It seems for the browsers we want, they clip off-screen drawing anyways.
     var curX = 0;
     var curY = 0;
     for (var i = 0; i < NUM_TILES; i++) {
@@ -374,6 +408,12 @@ Game.prototype.drawAnimate = function() {
             curY = j * TILE_WIDTH;
 //            console.log(curX);
             this.ctx.drawImage(this.imageObj, offsetX + curX, offsetY + curY);
+        }
+    }
+
+    if (this.arrDragPos.length > 1) {
+        for (var i = 0; i < this.arrDragPos.length; i++) {
+
         }
     }
 };
