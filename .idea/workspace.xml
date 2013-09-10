@@ -4,15 +4,17 @@
     <list default="true" id="03d0399e-403c-4bfd-88c7-21c716e2d3c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ball.js" afterPath="$PROJECT_DIR$/js/ball.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/game.js" afterPath="$PROJECT_DIR$/js/game.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nonstop-assignment.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/index.html" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378654083948" ignored="false" />
-    <file path="/game.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378700565750" ignored="false" />
-    <file path="/style.css" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378575807096" ignored="false" />
+    <file path="/index.html" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378741609634" ignored="false" />
+    <file path="/game.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378783558909" ignored="false" />
+    <file path="/style.css" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378726647864" ignored="false" />
     <file path="/Dummy.txt" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378636226851" ignored="false" />
-    <file path="/ball.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378698373211" ignored="false" />
+    <file path="/ball.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378711407752" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +37,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="45" selection-start="719" selection-end="719" vertical-scroll-proportion="-10.0">
+            <state line="18" column="71" selection-start="840" selection-end="840" vertical-scroll-proportion="-11.25">
               <folding />
             </state>
           </provider>
@@ -44,7 +46,7 @@
       <file leaf-file-name="utils.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="19" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -53,11 +55,17 @@
       <file leaf-file-name="game.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="323" column="55" selection-start="8491" selection-end="8491" vertical-scroll-proportion="7.609195">
-              <folding>
-                <marker date="1378700652000" expanded="true" signature="8490:8602" placeholder="{...}" />
-                <marker date="1378700652000" expanded="true" signature="8627:8743" placeholder="{...}" />
-              </folding>
+            <state line="271" column="35" selection-start="6726" selection-end="6726" vertical-scroll-proportion="0.6128364">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HTML5.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1019" column="0" selection-start="16339" selection-end="16339" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -65,7 +73,7 @@
       <file leaf-file-name="ball.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/ball.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="24" selection-start="2491" selection-end="2491" vertical-scroll-proportion="-8.076923">
+            <state line="140" column="55" selection-start="3839" selection-end="3839" vertical-scroll-proportion="-4.672727">
               <folding />
             </state>
           </provider>
@@ -101,7 +109,7 @@
       <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="34" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
+            <state line="55" column="49" selection-start="1035" selection-end="1035" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -128,16 +136,16 @@
         <option value="$PROJECT_DIR$/css/reset.css" />
         <option value="$PROJECT_DIR$/js/jquery.path.js" />
         <option value="$PROJECT_DIR$/js/utils.js" />
-        <option value="$PROJECT_DIR$/css/style.css" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/ball.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/js/game.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="112" />
-    <option name="y" value="69" />
+    <option name="x" value="76" />
+    <option name="y" value="43" />
     <option name="width" value="1244" />
     <option name="height" value="878" />
   </component>
@@ -352,13 +360,13 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="112" y="69" width="1244" height="878" extended-state="0" />
-    <editor active="true" />
+    <frame x="76" y="43" width="1244" height="878" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24406332" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38411137" sideWeight="0.37862796" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38411137" sideWeight="0.3773087" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38411137" sideWeight="0.3773087" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24986681" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -436,13 +444,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="32" selection-start="645" selection-end="645" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/utils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="19" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0">
@@ -453,10 +454,7 @@
     <entry file="file://$PROJECT_DIR$/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="66" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1378700652000" expanded="true" signature="8490:8602" placeholder="{...}" />
-            <marker date="1378700652000" expanded="true" signature="8627:8743" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -488,13 +486,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/reset.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="1" selection-start="1068" selection-end="1068" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DHTML.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="17" selection-start="211" selection-end="211" vertical-scroll-proportion="0.0">
@@ -509,41 +500,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/utils.js">
+    <entry file="file://$PROJECT_DIR$/js/ball.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="19" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0">
+        <state line="140" column="55" selection-start="3839" selection-end="3839" vertical-scroll-proportion="-4.672727">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/style.css">
+    <entry file="file://$PROJECT_DIR$/css/reset.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="34" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
+        <state line="46" column="1" selection-start="1068" selection-end="1068" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="45" selection-start="719" selection-end="719" vertical-scroll-proportion="-10.0">
+        <state line="18" column="71" selection-start="840" selection-end="840" vertical-scroll-proportion="-11.25">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/ball.js">
+    <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="24" selection-start="2491" selection-end="2491" vertical-scroll-proportion="-8.076923">
+        <state line="55" column="49" selection-start="1035" selection-end="1035" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1019" column="0" selection-start="16339" selection-end="16339" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="323" column="55" selection-start="8491" selection-end="8491" vertical-scroll-proportion="7.609195">
-          <folding>
-            <marker date="1378700652000" expanded="true" signature="8490:8602" placeholder="{...}" />
-            <marker date="1378700652000" expanded="true" signature="8627:8743" placeholder="{...}" />
-          </folding>
+        <state line="271" column="35" selection-start="6726" selection-end="6726" vertical-scroll-proportion="0.6128364">
+          <folding />
         </state>
       </provider>
     </entry>

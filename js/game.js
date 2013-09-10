@@ -16,17 +16,7 @@ function isMobile() {
     return rVal;
 }
 
-function updateContainer() {
-    var main = $("#main");
 
-    var width = main.width();
-    var height = main.height();
-
-    // Set canvas width and height attributes correctly to
-    // match actual CSS pixel size
-    main.attr('width', width);
-    main.attr('height', height);
-}
 
 function TheGame() {
     // ##TODONE## resolve this properly
@@ -40,13 +30,14 @@ function TheGame() {
         });
     }
 
-    updateContainer();
+    var game = new Game(iface);
+
+    game.updateContainer();
     // ##TODONE## needs resize handler
     $(window).resize(function() {
-        updateContainer();
+        game.updateContainer();
     });
 
-    var game = new Game(iface);
 
     $('#main').canvasDragDrop({
         mouse: iface == 'desktop',
@@ -58,6 +49,7 @@ function TheGame() {
         tolerance : iface == 'desktop' ? 5 : 1
     });
 
+    game.update();
     game.start();
 }
 
@@ -89,36 +81,64 @@ function smoothstep(a, b, t)
 
 function Game(iIface) {
     this.iface = iIface;
-    this.canvas = $('#main')[0];
-    this.ctxToon = $('#toon')[0].getContext('2d');
-    this.ctx = this.canvas.getContext('2d');
+
+    this.$toon = this.getElement('#toon');
+    this.$background = this.getElement('#background');
+    this.$main = this.getElement('#main');
+
+    this.ctxToon = this.$toon[0].getContext('2d');
+    this.ctx = this.$main[0].getContext('2d');
+    this.ctxBg = this.$background[0].getContext('2d');
+
+    this.imageObj = new Image();
+    this.imageObj.src = "images/grass-tile.jpg";
+
     this.isRunning = true;
 
     this.HALF_PI = Math.PI/2;
     this.TRAVEL_SPEED = 0.01;
-    this.interpPoint = {x: 100, y: 100, dist: 0, rad: -Math.PI/2};
+    this.interpPoint = {x: 512, y: 512, dist: 0, rad: -Math.PI/2};
     this.currentDist = 0;
     this.ball = new Ball(this.ctxToon, 100, 100, 20);
     this.currentPoint = 0;
 
-    this.animateToonEnd();
+    this.vpOffset = {x: 0, y: 0};
 }
 
-Game.prototype.clickAt = function (x, y) {
+Game.prototype.updateContainer = function() {
+
+    this.viewPortWidth = $(window).width(); //$('#container').width();
+    this.viewPortHeight = $(window).height(); //$('#container').height();
+
+    this.vpOffset.x = this.viewPortWidth/2;
+    this.vpOffset.y = this.viewPortHeight/2;
+
+    console.log({width: this.viewPortWidth, height: this.viewPortHeight});
+    // Set canvas width and height attributes correctly to
+    // match actual CSS pixel size
+    this.$main.attr('width', this.viewPortWidth);
+    this.$main.attr('height', this.viewPortHeight);
+};
+
+Game.prototype.clickAt = function (iX, iY) {
     this.animateToonEnd();
 
-    this.click = {x: x, y: y};
+    x = iX + this.interpPoint.x - this.vpOffset.x;
+    y = iY + this.interpPoint.y - this.vpOffset.y;
+
+//    this.click = {x: x, y: y};
     this.dragpos = {x: x, y: y};
+
+    console.log({x: iX, y: iY});
+
     this.arrDragPos = [];
     this.dragDist = 0;
     this.dragRad = 0;
 
-    var dragObj = null;
-
     this.dragpos.x = this.interpPoint.x;
     this.dragpos.y = this.interpPoint.y;
 
-    dragObj = this.getDragPushObj(x, y);
+    var dragObj = this.getDragPushObj(x, y);
     if (dragObj) {
         this.arrDragPos.push(dragObj);
     }
@@ -136,7 +156,10 @@ Game.prototype.clickAt = function (x, y) {
     this.animateToon = true;
 };
 
-Game.prototype.dragStart = function (x, y) {
+Game.prototype.dragStart = function (iX, iY) {
+    x = iX + this.interpPoint.x - this.vpOffset.x;
+    y = iY + this.interpPoint.y - this.vpOffset.y;
+
     this.ctx.strokeStyle = '#ff0000';
     this.ctx.lineWidth = 4;
     this.ctx.beginPath();
@@ -152,10 +175,10 @@ Game.prototype.dragStart = function (x, y) {
     this.animateToonEnd();
 };
 
-Game.prototype.getToon = function() {
+Game.prototype.getElement = function(id) {
     var $div = $('#container');
 
-    return $div.find('#toon');
+    return $div.find(id);
 };
 
 Game.prototype.getDragPushObj = function(x, y) {
@@ -188,7 +211,10 @@ Game.prototype.getDragPushObj = function(x, y) {
     return rVal;
 };
 
-Game.prototype.drag = function(x, y) {
+Game.prototype.drag = function(iX, iY) {
+    x = iX + this.interpPoint.x - this.vpOffset.x;
+    y = iY + this.interpPoint.y - this.vpOffset.y;
+
     this.ctx.lineTo(x, y);
 
     this.ctx.stroke();
@@ -204,12 +230,15 @@ Game.prototype.drag = function(x, y) {
 
 };
 
-Game.prototype.dragStop = function(x, y) {
+Game.prototype.dragStop = function(iX, iY) {
 
     // Quick hack for mobile touch stop - doesn't give proper x, y
     if (this.iface == 'mobile') {
         x = this.dragpos.x;
         y = this.dragpos.y;
+    } else {
+        x = iX + this.interpPoint.x - this.vpOffset.x;
+        y = iY + this.interpPoint.y - this.vpOffset.y;
     }
 
     var dragObj = this.getDragPushObj(x, y);
@@ -231,6 +260,7 @@ Game.prototype.dragStop = function(x, y) {
 Game.prototype.start = function() {
     // main loop
     var self = this;
+    this.frameNumber = 0;
     (function gameLoop() {
         var now = Date.now();
         self.deltaTime = now - self.lastUpdateTimeStamp;
@@ -239,6 +269,7 @@ Game.prototype.start = function() {
             self.update();
             self.draw();
             self.click = null;
+            this.frameNumber++;
         }
         requestAnimFrame(gameLoop, self.canvas);
     })();
@@ -317,6 +348,36 @@ Game.prototype.update = function() {
     }
 };
 
+Game.prototype.drawAnimate = function() {
+    this.$toon.css({
+        left: this.vpOffset.x - 50 + 'px', // re-center the ship
+        top: this.vpOffset.y - 50 + 'px', // re-center the ship
+        '-webkit-transform': 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)',
+        transform: 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)'
+    });
+
+    var offsetX = -(this.interpPoint.x) + this.vpOffset.x;
+    var offsetY = -(this.interpPoint.y) + this.vpOffset.y;
+
+    this.ball.render((this.ball.dist + this.currentDist)/45, this.interpPoint.rad + this.HALF_PI);
+
+    var TILE_WIDTH = 240;
+    var NUM_TILES = 4;
+
+    this.ctx.clearRect(0,0, this.viewPortWidth, this.viewPortHeight);
+
+    var curX = 0;
+    var curY = 0;
+    for (var i = 0; i < NUM_TILES; i++) {
+        curX = i * TILE_WIDTH;
+        for (var j = 0; j < NUM_TILES; j++) {
+            curY = j * TILE_WIDTH;
+//            console.log(curX);
+            this.ctx.drawImage(this.imageObj, offsetX + curX, offsetY + curY);
+        }
+    }
+};
+
 Game.prototype.draw = function() {
     // draw here to canvas
 
@@ -330,15 +391,7 @@ Game.prototype.draw = function() {
 ////        this.ctx.fillRect(this.dragpos.x, this.dragpos.y, 5, 5);
 //    }
 
-    var $toon = this.getToon();
-
-    $toon.css({
-        left: this.interpPoint.x - 50 + 'px', // re-center the ship
-        top: this.interpPoint.y - 50 + 'px', // re-center the ship
-        '-webkit-transform': 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)',
-        transform: 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)'
-    });
-
-    this.ball.render((this.ball.dist + this.currentDist)/45);
-
+    if (this.animateToon || this.frameNumber == 0) {
+        this.drawAnimate();
+    }
 };

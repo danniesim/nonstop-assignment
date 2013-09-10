@@ -69,7 +69,7 @@ Ball.prototype.projection = function(xy, z, xyOffset, zOffset, distance) {
     return ((distance * xy) / (z - zOffset)) + xyOffset;
 };
 
-Ball.prototype.render = function (rotation) {
+Ball.prototype.render = function (rotation, direction) {
     var width = this.width;
     var height = this.height;
     var distance = this.distance;
@@ -90,8 +90,11 @@ Ball.prototype.render = function (rotation) {
         p.y = sphere.point[i].y;
         p.z = sphere.point[i].z;
 
-        this.rotateY(p, rotation);
-        this.rotateZ(p, -Math.PI / 2);
+        this.rotateX(p, rotation);
+//        this.rotateY(p, 0)
+//        this.rotateZ(p, direction);
+
+
 
         x = this.projection(p.x, p.z, width / 2.0, 100.0, distance);
         y = this.projection(p.y, p.z, height / 2.0, 100.0, distance);
