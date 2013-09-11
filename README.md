@@ -17,10 +17,12 @@ Requirements
 
 Methodology
 -----------
-* Ball is rendered as quasi-3D, 2 n-sided polygons drawn to simulate a rolling ball, polygon points are calculated with classical 3D ops.
+* Ball is rendered as quasi-3D, two n-sided polygons drawn to simulate a rolling ball, polygon points are calculated with classical 3D ops.
 * Things can be made more OOP, but it's just bloat at this point, re-factoring as we add code is the approach I take.
 * Code and variable names are made to sound 'English'. Comments are given where additional explanation is needed.
 * Can be made better, but done and works is better than perfect.
+* Firefox had some tiling gaps due to it's engine, just made +1 px titles to fill the gaps.
+* Made speed of ball vary according to distance of given transit, feels good to me, but extra long transits will have slow acelleration unfortunately...
 
 Tested On
 ---------
@@ -56,3 +58,6 @@ Can be optimized more, a good number of floating point ops can be reduced.
 Had loads fun doing this, there's something magical about a ball rolling on a patch of grass at the whim of your finger.
 
 Thanks for the assignment!
+
+
+Daniel Sim
