@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="03d0399e-403c-4bfd-88c7-21c716e2d3c7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/grass-tile.jpg" afterPath="$PROJECT_DIR$/images/grass-tile.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ball.js" afterPath="$PROJECT_DIR$/js/ball.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/game.js" afterPath="$PROJECT_DIR$/js/game.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="03d0399e-403c-4bfd-88c7-21c716e2d3c7" name="Default" comment="" />
     <ignored path="nonstop-assignment.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/index.html" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378871233142" ignored="false" />
