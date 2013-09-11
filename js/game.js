@@ -89,8 +89,9 @@ function Game(iIface) {
     this.ctxToon = this.$toon[0].getContext('2d');
     this.ctx = this.$main[0].getContext('2d');
 
-    this.imageObj = new Image();
-    this.imageObj.src = "images/grass-tile.jpg";
+    this.imgSource = ['images/grass-tile.jpg', 'images/shadow.png'];
+    this.images = [];
+    this.GRASS_TILE_IMG_IDX = 0;
 
     this.WORLD_PX = 1000;
     this.TILE_WIDTH = 250;
@@ -100,16 +101,26 @@ function Game(iIface) {
     this.frameNumber = 0;
     this.dragOn = false;
 
-    this.TOON_HALF_WIDTH = 100/2;
-    this.TOON_POS_CLIP_RADIUS = 42;
+    this.DRAW_LINE_COLOR = 'FF0000';
+    this.DRAW_LINE_WIDTH = 4;
+
+    this.OUT_OF_WORLD_COLOR = 'FFFFFF';
+
+    this.TOON_WIDTH = 100;
+    this.TOON_HALF_WIDTH = this.TOON_WIDTH/2;
+    this.TOON_POS_CLIP_RADIUS = 41;
+    this.SHADOW_OFFSET = {x:65, y:10};
+
     this.HALF_PI = Math.PI/2;
     this.TRAVEL_SPEED = 0.01;
+
+    // Set start position
     this.interpPoint = {x: 512, y: 512, dist: 0, rad: -Math.PI/2};
     this.currentDist = 0;
-    this.ball = new Ball(this.ctxToon, 100, 100, 20);
     this.currentPoint = 0;
-
     this.vpOffset = {x: 0, y: 0};
+
+    this.ball = new Ball(this.ctxToon, this.TOON_WIDTH, this.TOON_WIDTH, 20);
 }
 
 Game.prototype.updateContainer = function() {
@@ -120,7 +131,6 @@ Game.prototype.updateContainer = function() {
     this.vpOffset.x = this.viewPortWidth/2;
     this.vpOffset.y = this.viewPortHeight/2;
 
-    console.log({width: this.viewPortWidth, height: this.viewPortHeight});
     // Set canvas width and height attributes correctly to
     // match actual CSS pixel size
     this.$main.attr('width', this.viewPortWidth);
@@ -174,8 +184,6 @@ Game.prototype.dragStart = function (iX, iY) {
         this.dragDist = 0;
         this.dragRad = 0;
 
-        console.log({x: x, y: y});
-
         this.animateToonEnd();
     }
 };
@@ -225,7 +233,6 @@ Game.prototype.drag = function(iX, iY) {
         if (dragObj) {
             this.arrDragPos.push(dragObj);
         }
-        console.log({x: x, y: y});
     }
 };
 
@@ -246,9 +253,6 @@ Game.prototype.dragStop = function(iX, iY) {
         if (dragObj != null) {
             this.arrDragPos.push(dragObj);
         }
-        console.log({x: x, y: y});
-        console.log(this.arrDragPos);
-        console.log(this.dragDist);
 
         this.dragpos = null;
         var thisPoint = this.arrDragPos[0];
@@ -260,7 +264,7 @@ Game.prototype.dragStop = function(iX, iY) {
 
 };
 
-Game.prototype.start = function() {
+Game.prototype.realStart = function() {
     // main loop
     var self = this;
     (function gameLoop() {
@@ -274,6 +278,31 @@ Game.prototype.start = function() {
         }
         requestAnimFrame(gameLoop, self.canvas);
     })();
+}
+
+Game.prototype.start = function() {
+    // Wait for images to load...
+    // For production, you will want to display a loading screen...
+
+    var imgCtr = 0;
+
+    var self = this;
+
+    for (var num = 0; num < this.imgSource.length; num++) {
+        self.images[num] = new Image();
+
+        // Specify the source for the image
+        self.images[num].src = self.imgSource[num];
+
+        // only append the corresponding LI after the image is loaded
+        self.images[num].onload = function() {
+            imgCtr++;
+
+            if (imgCtr >= self.imgSource.length) {
+                self.realStart();
+            }
+        };
+    }
 };
 
 Game.prototype.interpolatePoint = function(iPoint, iDistance) {
@@ -302,9 +331,11 @@ Game.prototype.update = function() {
         // Get speed
         var travelSpeed = this.TRAVEL_SPEED * (this.dragDist);
 
+        // Make shorter transits faster proportionally
         if (travelSpeed < this.dragDist/50) {
             travelSpeed = this.dragDist/50;
         }
+        // Cap max speed on long distance transits
         if (travelSpeed > 10) {
             travelSpeed = 10;
         }
@@ -365,14 +396,15 @@ Game.prototype.update = function() {
 Game.prototype.drawAnimate = function() {
     this.$toon.css({
         left: this.vpOffset.x - this.TOON_HALF_WIDTH + 'px', // re-center the ship
-        top: this.vpOffset.y - this.TOON_HALF_WIDTH + 'px', // re-center the ship
+        top: this.vpOffset.y - this.TOON_HALF_WIDTH + 'px' // re-center the ship
+// CSS rotation was OK, but lighting composition must not rotate with direction. So did this in 3D.
 //        '-webkit-transform': 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)',
 //        transform: 'rotate(' + (this.interpPoint.rad + this.HALF_PI) + 'rad)'
     });
 
     this.$shadow.css({
-        left: this.vpOffset.x - 65 + 'px', // re-center the ship
-        top: this.vpOffset.y + 10 + 'px', // re-center the ship
+        left: this.vpOffset.x - this.SHADOW_OFFSET.x + 'px', // re-center the ship
+        top: this.vpOffset.y + this.SHADOW_OFFSET.y + 'px' // re-center the ship
     });
 
     var offsetX = -(this.interpPoint.x) + this.vpOffset.x;
@@ -380,7 +412,11 @@ Game.prototype.drawAnimate = function() {
 
     this.ball.render(this.ball.dist / 45, this.interpPoint.rad + this.HALF_PI);
 
-    this.ctx.clearRect(0,0, this.viewPortWidth, this.viewPortHeight);
+    this.ctx.save();
+    this.ctx.clearRect(0,0,this.viewPortWidth,this.viewPortHeight);
+    this.ctx.fillStyle = 'FFFFFF';
+    this.ctx.fillRect(0,0,this.viewPortWidth,this.viewPortHeight);
+
 
     // Negligible savings if a more sophisticated tiling strategy is used. So KISS.
     // It seems for the browsers we want, they clip off-screen drawing anyways.
@@ -390,11 +426,11 @@ Game.prototype.drawAnimate = function() {
         curX = cTileX * this.TILE_WIDTH;
         for (var cTileY = 0; cTileY < this.NUM_TILES; cTileY++) {
             curY = cTileY * this.TILE_WIDTH;
-            this.ctx.drawImage(this.imageObj, offsetX + curX, offsetY + curY);
+            this.ctx.drawImage(this.images[this.GRASS_TILE_IMG_IDX], offsetX + curX, offsetY + curY);
         }
     }
-    this.ctx.strokeStyle = '#ff0000';
-    this.ctx.lineWidth = 4;
+    this.ctx.strokeStyle = 'FF0000';
+    this.ctx.lineWidth = this.DRAW_LINE_WIDTH;
 
     if (this.arrDragPos != null) {
         if (this.arrDragPos.length > 0) {
@@ -410,11 +446,12 @@ Game.prototype.drawAnimate = function() {
             this.ctx.stroke();
         }
     }
+    this.ctx.restore();
 };
 
 Game.prototype.draw = function() {
     // draw here to canvas
-    var NUM_DRAW_BUFFERS = 5;
+    var NUM_DRAW_BUFFERS = 1;
     if (this.animateToon || this.frameNumber < NUM_DRAW_BUFFERS || this.dragOn) {
         this.drawAnimate();
         this.frameNumber++;

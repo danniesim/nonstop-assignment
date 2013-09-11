@@ -15,6 +15,14 @@ function Ball(iCtx, iWidth, iHeight, iRadius) {
     this.distance = 200;
     this.dist = 0;
     this.radius = iRadius;
+
+    // Compositing
+    this.SPECULAR_INNER_COLOR = 'rgba(64, 64, 55, 1)';
+    this.SPECULAR_OUTER_COLOR = 'rgba(0, 0, 22, 0)';
+
+    this.GROUND_GI_UPPER_COLOR = 'rgba(0, 100, 0, 0)';
+    this.GROUND_GI_LOWER_COLOR = 'rgba(0, 100, 0, 0.5)';
+
     this.create();
 }
 
@@ -27,7 +35,6 @@ function Point3D() {
 Ball.prototype.create = function() {
     this.point = [];
 
-    console.log(this.radius);
     this.numberOfVertexes = 0;
 
     var radius = Math.cos(Math.PI) * this.radius;
@@ -54,12 +61,13 @@ Ball.prototype.rotateX = function(point, radians) {
     point.z = (y * Math.sin(radians)) + (point.z * Math.cos(radians));
 };
 
+// Used rotation so comment out.
 //Ball.prototype.rotateY = function(point, radians) {
 //    var x = point.x;
 //    point.x = (x * Math.cos(radians)) + (point.z * Math.sin(radians) * -1.0);
 //    point.z = (x * Math.sin(radians)) + (point.z * Math.cos(radians));
 //};
-//
+
 Ball.prototype.rotateZ = function(point, radians) {
     var x = point.x;
     point.x = (x * Math.cos(radians)) + (point.y * Math.sin(radians) * -1.0);
@@ -144,14 +152,16 @@ Ball.prototype.render = function (rotation, rad) {
     this.renderHalf(rotation + Math.PI, rad, ctx, '#2222EE');
 
     // Draw 2nd side
-    this.renderHalf(rotation, rad, ctx, '#BBBBBB');
+    this.renderHalf(rotation, rad, ctx, '#CCCCCC');
 
     // Render Embellishments
+
+    // Do some specular with radial gradient.
     var p = new Point3D();
     var x, y;
     var grad = ctx.createRadialGradient(65, 35, 5, 50, 40, 50);
-    grad.addColorStop(0, 'rgb(88, 88, 77)');
-    grad.addColorStop(1, 'rgb(0, 0, 22)');
+    grad.addColorStop(0, this.SPECULAR_INNER_COLOR);
+    grad.addColorStop(1, this.SPECULAR_OUTER_COLOR);
     ctx.globalCompositeOperation = 'lighter';
     ctx.fillStyle = grad;
     ctx.beginPath();
@@ -162,9 +172,10 @@ Ball.prototype.render = function (rotation, rad) {
         p.z = this.point[i].z;
 
         this.rotateX(p, Math.PI/2);
+        this.rotateZ(p, rad);
 
-        x = this.projection(p.x, p.z, this.width / 2.0, this.ZOFFSET, this.distance);
-        y = this.projection(p.y, p.z, this.height / 2.0, this.ZOFFSET, this.distance);
+        x = this.projection(p.x, p.z, this.width / 2.0, this.ZOFFSET, this.distance - 2);
+        y = this.projection(p.y, p.z, this.height / 2.0, this.ZOFFSET, this.distance - 2);
 
         if (i == 0) {
             ctx.moveTo(x, y);
@@ -174,9 +185,10 @@ Ball.prototype.render = function (rotation, rad) {
     }
     ctx.fill();
 
-    var grad = ctx.createLinearGradient(50,70,50,100);
-    grad.addColorStop(0, 'rgba(0, 100, 0, 0)');
-    grad.addColorStop(1, 'rgba(0, 100, 0, 0.5)');
+    // Do a little Global Illumination - mimic light bouncing of grass with a linear gradient.
+    var grad = ctx.createLinearGradient(50, 70, 50, 100);
+    grad.addColorStop(0, this.GROUND_GI_UPPER_COLOR);
+    grad.addColorStop(1, this.GROUND_GI_LOWER_COLOR);
     ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = grad;
     ctx.beginPath();
@@ -187,6 +199,7 @@ Ball.prototype.render = function (rotation, rad) {
         p.z = this.point[i].z;
 
         this.rotateX(p, Math.PI/2);
+        this.rotateZ(p, rad);
 
         x = this.projection(p.x, p.z, this.width / 2.0, this.ZOFFSET, this.distance);
         y = this.projection(p.y, p.z, this.height / 2.0, this.ZOFFSET, this.distance);
