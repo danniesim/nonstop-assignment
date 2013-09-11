@@ -17,12 +17,25 @@ Requirements
 
 Methodology
 -----------
+### The Ball
 * Ball is rendered as quasi-3D, two n-sided polygons drawn to simulate a rolling ball, polygon points are calculated with classical 3D ops.
+* Did some tests on 3D texture mapped spheres for the ball, FPS unusable.
+* Tried shaded polygons, FPS unstatisfactory.
+* Fooled around with sprite animation, preferred silky smooth rotations and low-memory usage.
+
+### Housekeeping
 * Things can be made more OOP, but it's just bloat at this point, re-factoring as we add code is the approach I take.
 * Code and variable names are made to sound 'English'. Comments are given where additional explanation is needed.
 * Can be made better, but done and works is better than perfect.
-* Firefox had some tiling gaps due to it's engine, just made +1 px titles to fill the gaps.
+
+### Gameplay
 * Made speed of ball vary according to distance of given transit, feels good to me, but extra long transits will have slow acelleration unfortunately...
+* Decided to erase red line as new line is formed for clarity
+* One day, we might have smooth line filtering on the line drawn... ball twitches much when line segments are short.
+
+### Misc
+* Firefox had some tiling gaps due to it's engine, just made +1 px titles to fill the gaps.
+* Shadow is just a bitmap made in photoshop for more 'artistic' control.
 
 Tested On
 ---------
