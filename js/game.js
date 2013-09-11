@@ -94,6 +94,7 @@ function Game(iIface) {
     this.GRASS_TILE_IMG_IDX = 0;
 
     this.WORLD_PX = 1000;
+    // jpg size is 251, but we set 250 so get 1px overlap - firefox rendering glitch or we see gaps between tiles
     this.TILE_WIDTH = 250;
     this.NUM_TILES = this.WORLD_PX/this.TILE_WIDTH;
 
@@ -101,15 +102,16 @@ function Game(iIface) {
     this.frameNumber = 0;
     this.dragOn = false;
 
-    this.DRAW_LINE_COLOR = 'FF0000';
+    this.DRAW_LINE_COLOR = '#FF0000';
     this.DRAW_LINE_WIDTH = 4;
 
-    this.OUT_OF_WORLD_COLOR = 'FFFFFF';
+    this.OUT_OF_WORLD_COLOR = '#FFFFFF';
 
     this.TOON_WIDTH = 100;
     this.TOON_HALF_WIDTH = this.TOON_WIDTH/2;
     this.TOON_POS_CLIP_RADIUS = 41;
     this.SHADOW_OFFSET = {x:65, y:10};
+    this.BALL_DIST_2_ROT_CONSTANT = 45;
 
     this.HALF_PI = Math.PI/2;
     this.TRAVEL_SPEED = 0.01;
@@ -278,7 +280,7 @@ Game.prototype.realStart = function() {
         }
         requestAnimFrame(gameLoop, self.canvas);
     })();
-}
+};
 
 Game.prototype.start = function() {
     // Wait for images to load...
@@ -410,16 +412,15 @@ Game.prototype.drawAnimate = function() {
     var offsetX = -(this.interpPoint.x) + this.vpOffset.x;
     var offsetY = -(this.interpPoint.y) + this.vpOffset.y;
 
-    this.ball.render(this.ball.dist / 45, this.interpPoint.rad + this.HALF_PI);
+    this.ball.render(this.ball.dist / this.BALL_DIST_2_ROT_CONSTANT, this.interpPoint.rad + this.HALF_PI);
 
     this.ctx.save();
-    this.ctx.clearRect(0,0,this.viewPortWidth,this.viewPortHeight);
-    this.ctx.fillStyle = 'FFFFFF';
+    this.ctx.fillStyle = this.OUT_OF_WORLD_COLOR;
     this.ctx.fillRect(0,0,this.viewPortWidth,this.viewPortHeight);
 
 
     // Negligible savings if a more sophisticated tiling strategy is used. So KISS.
-    // It seems for the browsers we want, they clip off-screen drawing anyways.
+    // It seems for the browsers we want, they clip off-screen drawing anyway.
     var curX = 0;
     var curY = 0;
     for (var cTileX = 0; cTileX < this.NUM_TILES; cTileX++) {
@@ -429,7 +430,7 @@ Game.prototype.drawAnimate = function() {
             this.ctx.drawImage(this.images[this.GRASS_TILE_IMG_IDX], offsetX + curX, offsetY + curY);
         }
     }
-    this.ctx.strokeStyle = 'FF0000';
+    this.ctx.strokeStyle = this.DRAW_LINE_COLOR;
     this.ctx.lineWidth = this.DRAW_LINE_WIDTH;
 
     if (this.arrDragPos != null) {
@@ -451,7 +452,7 @@ Game.prototype.drawAnimate = function() {
 
 Game.prototype.draw = function() {
     // draw here to canvas
-    var NUM_DRAW_BUFFERS = 1;
+    var NUM_DRAW_BUFFERS = 5;
     if (this.animateToon || this.frameNumber < NUM_DRAW_BUFFERS || this.dragOn) {
         this.drawAnimate();
         this.frameNumber++;

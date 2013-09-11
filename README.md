@@ -17,9 +17,42 @@ Requirements
 
 Methodology
 -----------
-Coming soon!
+* Ball is rendered as quasi-3D, 2 n-sided polygons drawn to simulate a rolling ball, polygon points are calculated with classical 3D ops.
+* Things can be made more OOP, but it's just bloat at this point, re-factoring as we add code is the approach I take.
+* Code and variable names are made to sound 'English'. Comments are given where additional explanation is needed.
+* Can be made better, but done and works is better than perfect.
+
+Tested On
+---------
+Macbook Air:
+* Firefox 23.0.1 (OSX 10.8.4)
+* Chrome 29.0.1547.65 (OSX 10.8.4)
+* Safari 6.0.5 (OSX 10.8.4)
+
+iPad2:
+* Safari (iOS 5.1 9B176)
+* Chrome 27.0.1453.10 (iOS 5.1 9B176)
+
+iPhone 4S:
+* Safari (iOS 6.1.3 10B329)
+* Chrome 28.0.1500.12 (iOS 6.1.3 10B329)
+
+iPhone 5:
+* Safari (iOS 6.1.4 10B350)
+* Chrome 28.0.1500.16 (iOS 6.1.4 10B350)
+
+Samsung Galaxy S3:
+* Android Browser (Android 4.1.2)
+* Chrome 29.0.1547.72 (Android 4.1.2)
+
+Notes:
+iOS 5.1 9B176 has orientation change/resize bug, might not call resize callback at times.
 
 
-Addtional Thoughts
+Additional Thoughts
 ------------------
-Really had fun doing this!
+Can be optimized more, a good number of floating point ops can be reduced.
+
+Had loads fun doing this, there's something magical about a ball rolling on a patch of grass at the whim of your finger.
+
+Thanks for the assignment!

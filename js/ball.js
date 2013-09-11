@@ -143,6 +143,10 @@ Ball.prototype.renderHalf = function (rotation, rad, ctx, color) {
     ctx.fill();
 };
 
+/*
+ * Renders ball with 2 filled n-sided polygons then applies lighting pass
+ *
+ */
 Ball.prototype.render = function (rotation, rad) {
     var ctx = this.ctx;
     ctx.save();
@@ -171,6 +175,7 @@ Ball.prototype.render = function (rotation, rad) {
         p.y = this.point[i].y;
         p.z = this.point[i].z;
 
+        // The rotation below can be made unnecessary, but works for now and FPS is fine.
         this.rotateX(p, Math.PI/2);
         this.rotateZ(p, rad);
 
@@ -198,6 +203,7 @@ Ball.prototype.render = function (rotation, rad) {
         p.y = this.point[i].y;
         p.z = this.point[i].z;
 
+        // The rotation below can be made unnecessary, but works for now and FPS is fine.
         this.rotateX(p, Math.PI/2);
         this.rotateZ(p, rad);
 
