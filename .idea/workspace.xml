@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="03d0399e-403c-4bfd-88c7-21c716e2d3c7" name="Default" comment="" />
+    <list default="true" id="03d0399e-403c-4bfd-88c7-21c716e2d3c7" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/game.js" afterPath="$PROJECT_DIR$/js/game.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="nonstop-assignment.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/index.html" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378871233142" ignored="false" />
-    <file path="/game.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378882203739" ignored="false" />
+    <file path="/game.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378890828764" ignored="false" />
     <file path="/style.css" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378806880571" ignored="false" />
-    <file path="/Dummy.txt" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378880553783" ignored="false" />
+    <file path="/Dummy.txt" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378884896744" ignored="false" />
     <file path="/ball.js" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378874480909" ignored="false" />
     <file path="/README.md" changelist="03d0399e-403c-4bfd-88c7-21c716e2d3c7" time="1378884014176" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -54,19 +57,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="game.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="58" selection-start="1877" selection-end="1877" vertical-scroll-proportion="0.0">
+            <state line="232" column="40" selection-start="6097" selection-end="6097" vertical-scroll-proportion="0.9027356">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="26" selection-start="2001" selection-end="2001" vertical-scroll-proportion="1.3255814">
+            <state line="57" column="26" selection-start="2001" selection-end="2001" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -126,9 +129,9 @@
         <option value="$PROJECT_DIR$/earth.html" />
         <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/game.js" />
         <option value="$PROJECT_DIR$/js/ball.js" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/js/game.js" />
       </list>
     </option>
   </component>
@@ -262,13 +265,13 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$USER_HOME$/workspace-frb/nonstop/jquery/jquery.min.js" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/workspace-frb/nonstop/jquery/jquery.min.js" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -376,7 +379,7 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24406332" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31096345" sideWeight="0.50145775" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31096345" sideWeight="0.50291544" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31096345" sideWeight="0.49708456" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24986681" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -490,9 +493,7 @@
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DHTML.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="17" selection-start="211" selection-end="211" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="11" column="17" selection-start="211" selection-end="211" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
@@ -549,16 +550,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/game.js">
+    <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="58" selection-start="1877" selection-end="1877" vertical-scroll-proportion="0.0">
+        <state line="57" column="26" selection-start="2001" selection-end="2001" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="26" selection-start="2001" selection-end="2001" vertical-scroll-proportion="1.3255814">
+        <state line="232" column="40" selection-start="6097" selection-end="6097" vertical-scroll-proportion="0.9027356">
           <folding />
         </state>
       </provider>

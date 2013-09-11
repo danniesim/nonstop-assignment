@@ -140,43 +140,9 @@ Game.prototype.updateContainer = function() {
 };
 
 Game.prototype.clickAt = function (iX, iY) {
-    this.animateToonEnd();
+    if (this.isRunning == true) {
+        this.animateToonEnd();
 
-    var x = iX + this.interpPoint.x - this.vpOffset.x;
-    var y = iY + this.interpPoint.y - this.vpOffset.y;
-
-    this.dragpos = {x: x, y: y};
-
-    this.arrDragPos = [];
-    this.dragDist = 0;
-    this.dragRad = 0;
-
-    this.dragpos.x = this.interpPoint.x;
-    this.dragpos.y = this.interpPoint.y;
-
-    var dragObj = this.getDragPushObj(x, y);
-    if (dragObj) {
-        this.arrDragPos.push(dragObj);
-    }
-
-    var thisPoint = this.arrDragPos[0];
-    this.totalPointDist = thisPoint.dist;
-
-    this.animateToon = true;
-};
-
-Game.prototype.dragStart = function (iX, iY) {
-    var boundLeft = this.vpOffset.x - this.TOON_HALF_WIDTH;
-    var boundRight = this.vpOffset.x + this.TOON_HALF_WIDTH;
-    var boundTop = this.vpOffset.y - this.TOON_HALF_WIDTH;
-    var boundBottom = this.vpOffset.y + this.TOON_HALF_WIDTH;
-
-    var inX = (iX > boundLeft) && (iX < boundRight);
-    var inY = (iY > boundTop) && (iY < boundBottom);
-    if (inX && inY) {
-        iX = this.vpOffset.x;
-        iY = this.vpOffset.y;
-        this.dragOn = true;
         var x = iX + this.interpPoint.x - this.vpOffset.x;
         var y = iY + this.interpPoint.y - this.vpOffset.y;
 
@@ -186,7 +152,45 @@ Game.prototype.dragStart = function (iX, iY) {
         this.dragDist = 0;
         this.dragRad = 0;
 
-        this.animateToonEnd();
+        this.dragpos.x = this.interpPoint.x;
+        this.dragpos.y = this.interpPoint.y;
+
+        var dragObj = this.getDragPushObj(x, y);
+        if (dragObj) {
+            this.arrDragPos.push(dragObj);
+        }
+
+        var thisPoint = this.arrDragPos[0];
+        this.totalPointDist = thisPoint.dist;
+
+        this.animateToon = true;
+    }
+};
+
+Game.prototype.dragStart = function (iX, iY) {
+    if (this.isRunning == true) {
+        var boundLeft = this.vpOffset.x - this.TOON_HALF_WIDTH;
+        var boundRight = this.vpOffset.x + this.TOON_HALF_WIDTH;
+        var boundTop = this.vpOffset.y - this.TOON_HALF_WIDTH;
+        var boundBottom = this.vpOffset.y + this.TOON_HALF_WIDTH;
+
+        var inX = (iX > boundLeft) && (iX < boundRight);
+        var inY = (iY > boundTop) && (iY < boundBottom);
+        if (inX && inY) {
+            iX = this.vpOffset.x;
+            iY = this.vpOffset.y;
+            this.dragOn = true;
+            var x = iX + this.interpPoint.x - this.vpOffset.x;
+            var y = iY + this.interpPoint.y - this.vpOffset.y;
+
+            this.dragpos = {x: x, y: y};
+
+            this.arrDragPos = [];
+            this.dragDist = 0;
+            this.dragRad = 0;
+
+            this.animateToonEnd();
+        }
     }
 };
 
